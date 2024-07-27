@@ -6,7 +6,11 @@ This repository is the official implementation of the paper “FedMHO: Heterogen
 
 
 
-**Note: We use PyTorch with MPI backend for a Master-Worker computation/communication topology. Therefore, do not use the "pip install" command to install PyTorch!**
+**Note: **
+
+**We use PyTorch with MPI backend for a Master-Worker computation/communication topology. **
+
+**The code and environment are based on FedDF: https://github.com/epfml/federated-learning-public-code.**
 
 
 
@@ -42,4 +46,4 @@ python run.py     --arch vgg9  --complex_arch master=vgg9,worker=vgg9:cnn,num_cl
 
 
 
-**Besides, we are based on DENSE's official code with minor modifications to suit our experimental setup, and the code is provided in the DENSE-code folder.**
+Besides, we are based on DENSE's official code with minor modifications to suit our experimental setup, and the code is provided in the DENSE-code folder.

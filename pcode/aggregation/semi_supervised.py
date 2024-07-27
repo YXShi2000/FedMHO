@@ -545,8 +545,6 @@ def aggregate(
         teacher_models = [deepcopy(resnet_model)]
 
     print("begin training global model with synthesis data...")
-    best_acc = 0
-    acc_list = []
     for epoch in range(epochs):
         resnet_model.train()
         train_loss = 0
@@ -579,24 +577,18 @@ def aggregate(
             if (batch_idx + 1) % 300 == 0:
                 print('[%d, %5d] loss: .3%f' % (epoch + 1, batch_idx + 1, train_loss / 300))
 
-        resnet_model.eval()
-        correct, total = 0, 0
-        for batch_idx, img_target in enumerate(test_data_loader):
-            img, target = img_target
-            img, target = img.to(device), target.to(device)
-            pred = resnet_model(img)
+    resnet_model.eval()
+    correct, total = 0, 0
+    for batch_idx, img_target in enumerate(test_data_loader):
+        img, target = img_target
+        img, target = img.to(device), target.to(device)
+        pred = resnet_model(img)
 
-            _, predicted = torch.max(pred.data, dim=1)
-            total += target.size(0)
-            correct += torch.eq(predicted, target).sum().item()
-        acc = 100 * correct / total
-        acc_list.append(acc)
-        print(
-            "epoch %d train loss: %.3f |||||| test accuracy: %.3f %% " % (epoch + 1, train_loss, acc))
-        best_acc = max(acc, best_acc)
-    print("best test accuracy: %.3f %%" % best_acc)
-
-    print(acc_list)
+        _, predicted = torch.max(pred.data, dim=1)
+        total += target.size(0)
+        correct += torch.eq(predicted, target).sum().item()
+    acc = 100 * correct / total
+    print("test accuracy: %.3f %%" % acc)
 
     # print("begin training the scratch model with synthesis data...")
     # for epoch in range(epochs):
